@@ -1,0 +1,8 @@
+{
+  "name": "fluent-audiowaveform",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "repository": "git@github.com:emanuelturis/fluent-audiowaveform.git",
+  "author": "Emanuel Turis <emanuelturis@gmail.com>",
+  "license": "MIT"
+}
