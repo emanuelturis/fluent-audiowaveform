@@ -21,15 +21,17 @@ audiowaveform().input(stream)
 ```
 **toPng()**
 ```typescript
+// Return a png image
 audiowaveform().input(stream).toPng()
 ```
 **toJSON()**
 ```typescript
+// Return a JSON object
 audiowaveform().input(stream).toJSON()
 ```
 **pipe(stream: Writable)**
 ```typescript
 // Pass the output stream, usually the res object
-audiowaveform().input(stream).pipe(res)
+audiowaveform().input(stream).toJSON().pipe(res)
 ```
 
