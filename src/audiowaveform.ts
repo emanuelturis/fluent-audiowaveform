@@ -8,8 +8,6 @@ const AudioWaveform = () => {
   let stream: Readable;
 
   const api = {
-    args: ["--input-filename", "-", "--input-format", "mp3"],
-
     input: (providedStream: Readable) => {
       stream = providedStream;
 

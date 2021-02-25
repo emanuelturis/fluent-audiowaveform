@@ -1,6 +1,5 @@
 import { Readable, Writable } from "stream";
 declare const AudioWaveform: () => {
-    args: string[];
     input: (providedStream: Readable) => any;
     toPng: () => any;
     toJSON: () => any;
