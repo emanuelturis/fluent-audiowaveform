@@ -1,43 +1,45 @@
-import { Readable, Writable } from "stream";
 import { spawn } from "child_process";
+import { Readable, Writable } from "stream";
 
 // TODO: Add types
 // TODO: Add other methods
-function AudioWaveform(this: any) {
-  this.args = ["--input-filename", "-", "--input-format", "mp3"];
+const AudioWaveform = () => {
+  let args = ["--input-filename", "-", "--input-format", "mp3"];
+  let stream: Readable;
 
-  this.input = function (stream: Readable) {
-    this.stream = stream;
-    return this;
+  const api = {
+    args: ["--input-filename", "-", "--input-format", "mp3"],
+
+    input: (providedStream: Readable) => {
+      stream = providedStream;
+
+      return api;
+    },
+
+    toPng: () => {
+      const baseArgs = args;
+
+      args = [...baseArgs, "--output-format", "png"];
+
+      return api;
+    },
+
+    toJSON: () => {
+      const baseArgs = args;
+      args = [...baseArgs, "--output-format", "json", "--output-filename", "-"];
+      return api;
+    },
+
+    pipe: (res: Writable) => {
+      const myREPL = spawn("audiowaveform", args);
+
+      stream.pipe(myREPL.stdin);
+
+      myREPL.stdout.pipe(res);
+    },
   };
 
-  this.toPng = function () {
-    const baseArgs = this.args;
-    this.args = [...baseArgs, "--output-format", "png"];
-    return this;
-  };
-
-  this.toJSON = function () {
-    const baseArgs = this.args;
-    this.args = [
-      ...baseArgs,
-      "--output-format",
-      "json",
-      "--output-filename",
-      "-",
-    ];
-    return this;
-  };
-
-  this.pipe = function (res: Writable) {
-    const myREPL = spawn("audiowaveform", [...this.args]);
-
-    this.stream.pipe(myREPL.stdin);
-
-    myREPL.stdout.pipe(res);
-  };
-
-  return this;
-}
+  return api;
+};
 
 export default AudioWaveform;
