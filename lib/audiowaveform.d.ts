@@ -1,8 +1,10 @@
+/// <reference types="node" />
 import { Readable, Writable } from "stream";
-declare const AudioWaveform: () => {
-    input: (providedStream: Readable) => any;
-    toPng: () => any;
-    toJSON: () => any;
+interface IApi {
+    input: (providedStream: Readable) => this;
+    toPng: () => this;
+    toJSON: () => this;
     pipe: (res: Writable) => void;
-};
+}
+declare const AudioWaveform: () => IApi;
 export default AudioWaveform;

@@ -1,13 +1,20 @@
 import { spawn } from "child_process";
 import { Readable, Writable } from "stream";
 
+interface IApi {
+  input: (providedStream: Readable) => this;
+  toPng: () => this;
+  toJSON: () => this;
+  pipe: (res: Writable) => void;
+}
+
 // TODO: Add types
 // TODO: Add other methods
 const AudioWaveform = () => {
   let args = ["--input-filename", "-", "--input-format", "mp3"];
   let stream: Readable;
 
-  const api = {
+  const api: IApi = {
     input: (providedStream: Readable) => {
       stream = providedStream;
 
