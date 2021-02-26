@@ -25,7 +25,7 @@ const AudioWaveform = () => {
 
   // has required args
   const hasArgs = () =>
-    new Promise<{ isValid: boolean; error: string | null }>((resolve) => {
+    new Promise<{ isValid: boolean; error?: string | undefined }>((resolve) => {
       const hasOutputFormat = args.includes("--output-format");
 
       // audiowaveform requires --output-format when --output-format is -
@@ -46,7 +46,6 @@ const AudioWaveform = () => {
 
       return resolve({
         isValid: true,
-        error: null,
       });
     });
 
@@ -71,12 +70,22 @@ const AudioWaveform = () => {
       return api;
     },
 
-    pipe: (res: Writable) => {
+    pipe: async (res) => {
+      const { isValid, error } = await hasArgs();
+
+      if (!isValid) {
+        res.emit("error", new Error(error));
+        res.end();
+        return;
+      }
+
       const myREPL = spawn("audiowaveform", args);
 
       stream.pipe(myREPL.stdin);
 
       myREPL.stdout.pipe(res);
+
+      return;
     },
 
     promise: () => {
