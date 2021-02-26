@@ -45,8 +45,20 @@ const AudioWaveform = () => {
     },
 
     promise: () => {
-      return new Promise((resolve) => {
-        let stdoutData: any = "";
+      const hasOutputFormat = args.includes("--output-format");
+
+      return new Promise((resolve, reject) => {
+        // audiowaveform requires --output-format when --output-format is -
+        if (!hasOutputFormat) {
+          return reject("Output format is required.");
+        }
+
+        // audiowaveform requires standard input when --input-filename is -
+        if (!stream) {
+          return reject("Stream is required.");
+        }
+
+        let stdoutData: string = "";
 
         const myREPL = spawn("audiowaveform", args);
 
