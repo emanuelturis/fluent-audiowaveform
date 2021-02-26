@@ -34,4 +34,9 @@ audiowaveform().input(stream).toJSON()
 // Pass the output stream, usually the res object
 audiowaveform().input(stream).toJSON().pipe(res)
 ```
+**promise()**
+```typescript
+// Turn all methods into a promise
+const jsonObject = await audiowaveform().input(stream).toJSON().promise()
+```
 
