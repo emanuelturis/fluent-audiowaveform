@@ -12,7 +12,14 @@ interface IApi {
 
 // TODO: Add other methods
 const AudioWaveform = () => {
-  let args = ["--input-filename", "-", "--input-format", "mp3"];
+  let args = [
+    "--input-filename",
+    "-",
+    "--input-format",
+    "mp3",
+    "--output-filename",
+    "-",
+  ];
   let stream: Readable;
 
   const api: IApi = {
@@ -32,7 +39,7 @@ const AudioWaveform = () => {
 
     toJSON: () => {
       const baseArgs = args;
-      args = [...baseArgs, "--output-format", "json", "--output-filename", "-"];
+      args = [...baseArgs, "--output-format", "json"];
       return api;
     },
 
