@@ -20,7 +20,35 @@ const AudioWaveform = () => {
     "--output-filename",
     "-",
   ];
+
   let stream: Readable;
+
+  // has required args
+  const hasArgs = () =>
+    new Promise<{ isValid: boolean; error: string | null }>((resolve) => {
+      const hasOutputFormat = args.includes("--output-format");
+
+      // audiowaveform requires --output-format when --output-format is -
+      if (!hasOutputFormat) {
+        return resolve({
+          isValid: false,
+          error: "Output format is required.",
+        });
+      }
+
+      // audiowaveform requires standard input when --input-filename is -
+      if (!stream) {
+        return resolve({
+          isValid: false,
+          error: "Stream is required.",
+        });
+      }
+
+      return resolve({
+        isValid: true,
+        error: null,
+      });
+    });
 
   const api: IApi = {
     input: (providedStream: Readable) => {
@@ -52,17 +80,11 @@ const AudioWaveform = () => {
     },
 
     promise: () => {
-      const hasOutputFormat = args.includes("--output-format");
+      return new Promise(async (resolve, reject) => {
+        const { isValid, error } = await hasArgs();
 
-      return new Promise((resolve, reject) => {
-        // audiowaveform requires --output-format when --output-format is -
-        if (!hasOutputFormat) {
-          return reject("Output format is required.");
-        }
-
-        // audiowaveform requires standard input when --input-filename is -
-        if (!stream) {
-          return reject("Stream is required.");
+        if (!isValid) {
+          return reject(error);
         }
 
         let stdoutData: string = "";
