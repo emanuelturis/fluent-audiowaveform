@@ -6,9 +6,10 @@ interface IApi {
   toPng: () => this;
   toJSON: () => this;
   pipe: (res: Writable) => void;
+  // TODO: Add type to Promise
+  promise: () => Promise<any>;
 }
 
-// TODO: Add types
 // TODO: Add other methods
 const AudioWaveform = () => {
   let args = ["--input-filename", "-", "--input-format", "mp3"];
@@ -41,6 +42,24 @@ const AudioWaveform = () => {
       stream.pipe(myREPL.stdin);
 
       myREPL.stdout.pipe(res);
+    },
+
+    promise: () => {
+      return new Promise((resolve) => {
+        let stdoutData: any = "";
+
+        const myREPL = spawn("audiowaveform", args);
+
+        stream.pipe(myREPL.stdin);
+
+        myREPL.stdout.on("data", (data) => {
+          stdoutData += data;
+        });
+
+        myREPL.stdout.on("end", () => {
+          resolve(stdoutData);
+        });
+      });
     },
   };
 

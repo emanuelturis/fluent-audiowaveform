@@ -5,6 +5,7 @@ interface IApi {
     toPng: () => this;
     toJSON: () => this;
     pipe: (res: Writable) => void;
+    promise: () => Promise<any>;
 }
 declare const AudioWaveform: () => IApi;
 export default AudioWaveform;
