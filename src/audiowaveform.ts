@@ -4,6 +4,7 @@ import { Readable, Writable } from "stream";
 type toPngOptions = {
   width?: number;
   height?: number;
+  colors?: "audacity" | "audition";
 };
 
 interface IApi {
@@ -76,9 +77,14 @@ const AudioWaveform = () => {
         height = ["--height", `${options.height}`];
       }
 
+      let colors: string[] = [];
+      if (options && options.colors) {
+        colors = ["--colors", `${options.colors}`];
+      }
+
       const outputFormat = ["--output-format", "png"];
 
-      args = [...baseArgs, ...outputFormat, ...width, ...height];
+      args = [...baseArgs, ...outputFormat, ...width, ...height, ...colors];
 
       return api;
     },

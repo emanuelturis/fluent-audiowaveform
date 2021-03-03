@@ -3,6 +3,7 @@ import { Readable, Writable } from "stream";
 declare type toPngOptions = {
     width?: number;
     height?: number;
+    colors?: "audacity" | "audition";
 };
 interface IApi {
     input: (providedStream: Readable) => this;
