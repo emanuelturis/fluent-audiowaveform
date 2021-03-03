@@ -19,15 +19,38 @@ import audiowaveform from 'fluent-audiowaveform';
 // Pass the stream containing input file
 audiowaveform().input(stream)
 ```
-**toPng()**
+**toPng(**{\
+&nbsp;&nbsp;width?: number;\
+&nbsp;&nbsp;height?: number;\
+&nbsp;&nbsp;colors?: "audacity" | "audition";\
+&nbsp;&nbsp;borderColor?: string;\
+&nbsp;&nbsp;backgroundColor?: string;\
+&nbsp;&nbsp;waveformColor?: string;\
+&nbsp;&nbsp;axisLabelColor?: string;\
+}**)**
 ```typescript
 // Return a png image
-audiowaveform().input(stream).toPng()
+audiowaveform().input(stream).toPng({
+  width: 1200,
+  height: 200,
+  axisLabel: "ffffff",
+  backgroundColor: "000000"
+})
 ```
 **toJSON()**
 ```typescript
 // Return a JSON object
 audiowaveform().input(stream).toJSON()
+```
+**start()**
+```typescript
+// Start at 53 seconds
+audiowaveform().input(stream).toPng().start(53).pipe(res)
+```
+**end()**
+```typescript
+// End at 745 seconds
+audiowaveform().input(stream).toPng().start(53).end(745).pipe(res)
 ```
 **pipe(stream: Writable)**
 ```typescript
@@ -39,4 +62,3 @@ audiowaveform().input(stream).toJSON().pipe(res)
 // Turn all methods into a promise
 const jsonObject = await audiowaveform().input(stream).toJSON().promise()
 ```
-
