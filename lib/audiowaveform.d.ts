@@ -4,6 +4,10 @@ declare type toPngOptions = {
     width?: number;
     height?: number;
     colors?: "audacity" | "audition";
+    borderColor?: string;
+    backgroundColor?: string;
+    waveformColor?: string;
+    axisLabelColor?: string;
 };
 interface IApi {
     input: (providedStream: Readable) => this;

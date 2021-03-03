@@ -5,6 +5,10 @@ type toPngOptions = {
   width?: number;
   height?: number;
   colors?: "audacity" | "audition";
+  borderColor?: string;
+  backgroundColor?: string;
+  waveformColor?: string;
+  axisLabelColor?: string;
 };
 
 interface IApi {
@@ -82,9 +86,39 @@ const AudioWaveform = () => {
         colors = ["--colors", `${options.colors}`];
       }
 
+      let borderColor: string[] = [];
+      if (options && options.borderColor) {
+        borderColor = ["--border-color", `${options.borderColor}`];
+      }
+
+      let backgroundColor: string[] = [];
+      if (options && options.backgroundColor) {
+        backgroundColor = ["--background-color", `${options.backgroundColor}`];
+      }
+
+      let waveformColor: string[] = [];
+      if (options && options.waveformColor) {
+        waveformColor = ["--waveform-color", `${options.waveformColor}`];
+      }
+
+      let axisLabelColor: string[] = [];
+      if (options && options.axisLabelColor) {
+        axisLabelColor = ["--axis-label-color", `${options.axisLabelColor}`];
+      }
+
       const outputFormat = ["--output-format", "png"];
 
-      args = [...baseArgs, ...outputFormat, ...width, ...height, ...colors];
+      args = [
+        ...baseArgs,
+        ...outputFormat,
+        ...width,
+        ...height,
+        ...colors,
+        ...borderColor,
+        ...backgroundColor,
+        ...waveformColor,
+        ...axisLabelColor,
+      ];
 
       return api;
     },
