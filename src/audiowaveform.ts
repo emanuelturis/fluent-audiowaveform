@@ -1,13 +1,20 @@
 import { spawn } from "child_process";
 import { Readable, Writable } from "stream";
 
+type toPngOptions = {
+  width?: number;
+  height?: number;
+};
+
 interface IApi {
   input: (providedStream: Readable) => this;
-  toPng: () => this;
+  toPng: (options?: toPngOptions) => this;
   toJSON: () => this;
   pipe: (res: Writable) => void;
   // TODO: Add type to Promise
   promise: () => Promise<any>;
+  end: (seconds: number) => this;
+  start: (seconds: number) => this;
 }
 
 // TODO: Add other methods
@@ -56,11 +63,37 @@ const AudioWaveform = () => {
       return api;
     },
 
-    toPng: () => {
+    toPng: (options) => {
       const baseArgs = args;
 
-      args = [...baseArgs, "--output-format", "png"];
+      let width: string[] = [];
+      if (options && options.width) {
+        width = ["--width", `${options.width}`];
+      }
 
+      let height: string[] = [];
+      if (options && options.height) {
+        height = ["--height", `${options.height}`];
+      }
+
+      const outputFormat = ["--output-format", "png"];
+
+      args = [...baseArgs, ...outputFormat, ...width, ...height];
+
+      return api;
+    },
+
+    end: (seconds) => {
+      const baseArgs = args;
+      const endArgs: string[] = ["--end", `${seconds}`];
+      args = [...baseArgs, ...endArgs];
+      return api;
+    },
+
+    start: (seconds) => {
+      const baseArgs = args;
+      const startArgs: string[] = ["--end", `${seconds}`];
+      args = [...baseArgs, ...startArgs];
       return api;
     },
 

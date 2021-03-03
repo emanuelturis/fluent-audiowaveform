@@ -1,11 +1,17 @@
 /// <reference types="node" />
 import { Readable, Writable } from "stream";
+declare type toPngOptions = {
+    width?: number;
+    height?: number;
+};
 interface IApi {
     input: (providedStream: Readable) => this;
-    toPng: () => this;
+    toPng: (options?: toPngOptions) => this;
     toJSON: () => this;
     pipe: (res: Writable) => void;
     promise: () => Promise<any>;
+    end: (seconds: number) => this;
+    start: (seconds: number) => this;
 }
 declare const AudioWaveform: () => IApi;
 export default AudioWaveform;
