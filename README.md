@@ -52,6 +52,21 @@ audiowaveform().input(stream).toPng().start(53).pipe(res)
 // End at 745 seconds
 audiowaveform().input(stream).toPng().start(53).end(745).pipe(res)
 ```
+**bits(8 | 16: number)**
+ ```typescript
+// 8 data bits
+audiowaveform().input(stream).toJSON().bits(8).pipe(res)
+```
+**splitChannels()**
+ ```typescript
+// Split channels instead of a single waveform
+audiowaveform().input(stream).toJSON().splitChannels().pipe(res)
+```
+**pixelsPerSecond(zoom: number)**
+ ```typescript
+// 50 pixels for second
+audiowaveform().input(stream).toPNG().pixelsPerSecond(50).pipe(res)
+```
 **pipe(stream: Writable)**
 ```typescript
 // Pass the output stream, usually the res object
