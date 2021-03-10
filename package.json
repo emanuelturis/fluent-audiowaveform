@@ -1,6 +1,6 @@
 {
   "name": "fluent-audiowaveform",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": "git@github.com:emanuelturis/fluent-audiowaveform.git",
