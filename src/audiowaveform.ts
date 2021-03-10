@@ -15,6 +15,9 @@ interface IApi {
   input: (providedStream: Readable) => this;
   toPng: (options?: toPngOptions) => this;
   toJSON: () => this;
+  bits: (bits: 8 | 16) => this;
+  splitChannels: () => this;
+  pixelsPerSecond: (zoom: number) =>  this;
   pipe: (res: Writable) => void;
   // TODO: Add type to Promise
   promise: () => Promise<any>;
@@ -120,6 +123,27 @@ const AudioWaveform = () => {
         ...axisLabelColor,
       ];
 
+      return api;
+    },
+
+    bits: (bits) => {
+      const baseArgs = args;
+      const endArgs: string[] = ["--bits", `${bits}`];
+      args = [...baseArgs, ...endArgs];
+      return api;
+    },
+
+    splitChannels: () => {
+      const baseArgs = args;
+      const endArgs: string[] = ["--split-channels"];
+      args = [...baseArgs, ...endArgs];
+      return api;
+    },
+
+    pixelsPerSecond: (zoom) => {
+      const baseArgs = args;
+      const endArgs: string[] = ["--pixels-per-second", `${zoom}`];
+      args = [...baseArgs, ...endArgs];
       return api;
     },
 
