@@ -13,6 +13,9 @@ interface IApi {
     input: (providedStream: Readable) => this;
     toPng: (options?: toPngOptions) => this;
     toJSON: () => this;
+    bits: (bits: 8 | 16) => this;
+    splitChannels: () => this;
+    pixelsPerSecond: (zoom: number) => this;
     pipe: (res: Writable) => void;
     promise: () => Promise<any>;
     end: (seconds: number) => this;
